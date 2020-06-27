@@ -39,11 +39,10 @@ export default {
   methods: {
     post: function(){
         // Add a new document with a generated id.
-            db.collection("blogs").doc(Auth.currentUser.email).collection(Date.now().toString()).add({
+            db.collection("users").doc(Auth.currentUser.email).collection("blogs").add({
                 title: this.blog.title,
                 content: this.blog.content
             }).then(()=>{
-                console.log(Date.now())
         this.$router.push('/');
       }).catch(function(error) {
             console.error("Error adding document: ", error);

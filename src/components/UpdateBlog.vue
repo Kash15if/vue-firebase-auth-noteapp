@@ -23,6 +23,7 @@
 import firebase from '../firebase/init';
 
 const db = firebase.firestore();
+const Auth = firebase.auth();
 
 
 export default {
@@ -43,7 +44,7 @@ export default {
   methods: {
 
     updateBlog(blog){
-      db.collection('blogs').doc(this.id).set({
+      db.collection('users').doc(Auth.currentUser.email).collection("blogs").doc(this.id).set({
         title : blog.title,
         content: blog.content
       }).then(()=>{
@@ -54,7 +55,7 @@ export default {
 
   created(){
 
-    db.collection('blogs').doc(this.id).get()
+    db.collection('users').doc(Auth.currentUser.email).collection("blogs").doc(this.id).get()
     .then((doc) => {
          return doc.data();
       }).then((data)=>{

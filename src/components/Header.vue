@@ -20,6 +20,8 @@
 <script>
 
 import firebase from '../firebase/init';
+
+const db = firebase.firestore();
 const Auth = firebase.auth();
 
 
@@ -40,9 +42,14 @@ export default {
    deleteAcc: function(){
     var user = Auth.currentUser;
 
-            user.delete().then(()=> {
+            db.collection('blogs').doc(user.email).delete()
+            .then(() => {
+               user.delete();
+            })
+            .then(()=> {
             this.$router.go({ path: this.$router.path });
-            }).catch(function(error) {
+            })
+            .catch(function(error) {
               // An error happened.
             });
    },

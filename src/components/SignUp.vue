@@ -42,6 +42,7 @@
 import firebase from '../firebase/init';
 
 const Auth = firebase.auth();
+const db = firebase.firestore();
 
 export default {
   name: 'SignUp',
@@ -60,8 +61,19 @@ export default {
 
       let email = this.emailId;
       let password = this.password;
+      let username = this.username;
       
     Auth.createUserWithEmailAndPassword(email, password)
+    .then(() =>{
+        db.collection("users").doc(email).set({
+          uid : username
+        }).then(()=>{
+            console.log(db);
+        }).catch((err)=>{
+          console.log(err);
+        });
+        
+    })
     .then(()=>{
       this.$router.go({ path: this.$router.path });
     })
