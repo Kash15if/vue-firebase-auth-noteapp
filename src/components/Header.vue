@@ -42,7 +42,7 @@ export default {
    deleteAcc: function(){
     var user = Auth.currentUser;
 
-            db.collection('blogs').doc(user.email).delete()
+            db.collection('users').doc(user.email).delete()
             .then(() => {
                user.delete();
             })
@@ -64,10 +64,23 @@ export default {
 
   created(){
     if(Auth.currentUser){
+      
       this.isLoggedIn = true;
-      this.currentUser = Auth.currentUser.email;
+
+      db.collection('users').doc(Auth.currentUser.email).get()
+      .then((doc) => {
+        return doc.data(); 
+      })
+      .then((data) => {
+        this.currentUser = data.uid;
+      })
+      .catch(function(error) {
+      console.log("Error getting document:", error);
+      });
+
+      
+      }
     }
-  }
 
   }
 

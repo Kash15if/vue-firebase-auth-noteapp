@@ -26,8 +26,9 @@
 
 import firebase from '../firebase/init';
 
-const db = firebase.firestore();
 const Auth = firebase.auth();
+const db = firebase.firestore();
+
 
 export default {
   name: 'MyNotes',
@@ -42,7 +43,7 @@ export default {
 
     deleteBlog(id){
 
-          db.collection('blogs').doc(Auth.currentUser.email).collection("blogs").doc(id).delete()
+          db.collection('users').doc(Auth.currentUser.email).collection('blogs').doc(id).delete()
           .then(()=>{
             this.blogs = this.blogs.filter((blog)=>{
              return  blog.id != id;
@@ -52,7 +53,7 @@ export default {
   },
 
   created(){
-     db.collection("users").doc(Auth.currentUser.email).collection("blogs").get()
+     db.collection('users').doc(Auth.currentUser.email).collection('blogs').get()
       .then((snapshot) => {
           var blogArray = [];
           

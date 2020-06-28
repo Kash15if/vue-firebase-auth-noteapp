@@ -59,6 +59,8 @@ export default {
   methods: {
     register(){
 
+console.log(this.username);
+
       let email = this.emailId;
       let password = this.password;
       let username = this.username;
@@ -67,15 +69,11 @@ export default {
     .then(() =>{
         db.collection("users").doc(email).set({
           uid : username
-        }).then(()=>{
-            console.log(db);
-        }).catch((err)=>{
-          console.log(err);
         });
         
     })
     .then(()=>{
-      this.$router.go({ path: this.$router.path });
+      this.$router.push('/');
     })
     .catch(function(error) {
         var errorCode = error.code;
