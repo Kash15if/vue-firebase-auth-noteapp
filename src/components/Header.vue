@@ -1,95 +1,91 @@
 <template>
+  <div class="header">
+    <a v-if="isLoggedIn" href="#" class="logo">{{ currentUser }}</a>
 
-<div class="header">
-  <a v-if="isLoggedIn" href="#"  class="logo">{{currentUser}}</a>
+    <a v-if="isLoggedIn"
+      ><router-link to="/createBlogs" exact>Create New</router-link></a
+    >
+    <a v-if="isLoggedIn"><router-link to="/" exact>My Notes</router-link></a>
 
-  <a v-if="isLoggedIn"><router-link to="/createBlogs" exact>Create New</router-link></a>
-  <a v-if="isLoggedIn"><router-link to="/" exact>My Notes</router-link></a>
-
-  <div class="header-right">
-        <a v-if="!isLoggedIn"><router-link to="/Login" exact>Login</router-link></a>
-        <a v-if="!isLoggedIn"><router-link to="/SignUp" exact>SignUp</router-link></a>
-        <a v-if="isLoggedIn" @click.prevent="logout">LogOut</a>
-        <a v-if="isLoggedIn"  @click.prevent="deleteAcc">Delete account</a>
+    <div class="header-right">
+      <a v-if="!isLoggedIn"
+        ><router-link to="/Login" exact>Login</router-link></a
+      >
+      <a v-if="!isLoggedIn"
+        ><router-link to="/SignUp" exact>SignUp</router-link></a
+      >
+      <a v-if="isLoggedIn" @click.prevent="logout">LogOut</a>
+      <a v-if="isLoggedIn" @click.prevent="deleteAcc">Delete account</a>
+    </div>
   </div>
-</div>
-
-
 </template>
 
 <script>
-
-import firebase from '../firebase/init';
+import firebase from "../firebase/init";
 
 const db = firebase.firestore();
 const Auth = firebase.auth();
 
-
 export default {
-
-  name: 'Header',
+  name: "Header",
 
   data() {
-    return{
-        isLoggedIn: false,
-        currentUser: ""
-    }
-  
+    return {
+      isLoggedIn: false,
+      currentUser: "",
+    };
   },
 
   methods: {
-   
-   deleteAcc: function(){
-    var user = Auth.currentUser;
+    deleteAcc: function() {
+      var user = Auth.currentUser;
 
-            db.collection('users').doc(user.email).delete()
-            .then(() => {
-               user.delete();
-            })
-            .then(()=> {
-            this.$router.go({ path: this.$router.path });
-            })
-            .catch(function(error) {
-              // An error happened.
-            });
-   },
-
-   logout: function(){
-    Auth.signOut().then(() => {
-        this.$router.go({ path: this.$router.path });
-      }).catch(function(error) {
-      });
-   }
+      db.collection("users")
+        .doc(user.email)
+        .delete()
+        .then(() => {
+          user.delete();
+        })
+        .then(() => {
+          this.$router.go({ path: this.$router.path });
+        })
+        .catch(function(error) {
+          // An error happened.
+        });
     },
 
-  created(){
-    if(Auth.currentUser){
-      
+    logout: function() {
+      Auth.signOut()
+        .then(() => {
+          this.$router.go({ path: this.$router.path });
+        })
+        .catch(function(error) {});
+    },
+  },
+
+  created() {
+    if (Auth.currentUser) {
       this.isLoggedIn = true;
 
-      db.collection('users').doc(Auth.currentUser.email).get()
-      .then((doc) => {
-        return doc.data(); 
-      })
-      .then((data) => {
-        this.currentUser = data.uid;
-      })
-      .catch(function(error) {
-      console.log("Error getting document:", error);
-      });
-
-      
-      }
+      db.collection("users")
+        .doc(Auth.currentUser.email)
+        .get()
+        .then((doc) => {
+          return doc.data();
+        })
+        .then((data) => {
+          this.currentUser = data.uid;
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error);
+        });
     }
-
-  }
-
-
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .header {
   overflow: hidden;
   background-color: #f1f1f1;
@@ -102,7 +98,7 @@ export default {
   text-align: center;
   padding: 8px;
   text-decoration: none;
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 20px;
   border-radius: 4px;
 }
@@ -132,10 +128,9 @@ export default {
     display: block;
     text-align: left;
   }
-  
+
   .header-right {
     float: none;
   }
 }
-
 </style>

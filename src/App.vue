@@ -1,25 +1,21 @@
 <template>
   <div id="app">
-
-    <Header/>
+    <Header />
     <router-view></router-view>
-
   </div>
 </template>
 
 <script>
-import LinkOption from './components/LinkOption.vue'
-import Header from './components/Header.vue'
+import LinkOption from "./components/LinkOption.vue";
+import Header from "./components/Header.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     LinkOption,
-    Header
-  }
-}
+    Header,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

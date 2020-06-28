@@ -10,7 +10,7 @@ const firebaseConfig = {
   storageBucket: "fir-vue1-e1cf1.appspot.com",
   messagingSenderId: "548838514650",
   appId: "1:548838514650:web:a58d12a7c62df9c586eae3",
-  measurementId: "G-PECVCL2LC7"
+  measurementId: "G-PECVCL2LC7",
 };
 
 // Initialize Firebase
