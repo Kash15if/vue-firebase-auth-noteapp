@@ -19,9 +19,13 @@
 <script>
 
 import firebase from '../firebase/init';
-
 const db = firebase.firestore();
 const Auth = firebase.auth();
+
+var d = new Date();
+var date = d.toLocaleDateString();
+var time = d.toLocaleTimeString();
+
 
 export default {
 
@@ -31,7 +35,9 @@ export default {
       return{
           blog: {
             title: "",
-            content: ""
+            content: "",
+            date: "",
+            time: ""
           }
       }
   },
@@ -41,7 +47,9 @@ export default {
         // Add a new document with a generated id.
             db.collection("users").doc(Auth.currentUser.email).collection("blogs").add({
                 title: this.blog.title,
-                content: this.blog.content
+                content: this.blog.content,
+                date: date,
+                time: time
             }).then(()=>{
         this.$router.push('/');
       }).catch(function(error) {

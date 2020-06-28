@@ -11,9 +11,15 @@
 
     <i class="material-icons del" @click="deleteBlog(blog.id)">delete</i>
 
-    <h3>{{ blog.title }}</h3>    
+    <div class="BlogData">
+     <h3>{{ blog.title }}</h3>    
     <p>{{ blog.content}}</p>
+    </div>
     
+    <i class="Date">Date(m/d/y): {{blog.date}}</i>
+    <i class="Time">time: {{blog.time}}</i>
+
+    </div>
 
     </div>
 
@@ -98,18 +104,32 @@ i{
     clear:left;
 }
 
+.BlogData{
+    background-color: rgb(208, 250, 241);
+    padding: 1.5vw;
+    color: rgb(7, 0, 0);
+    border-radius: 0.5vw;
+    margin-bottom: 1vh;
+}
+
 h3 {
-   background-color: rgb(208, 250, 241);
-   padding: 1.5vw;color: rgb(7, 0, 0);
-   border-radius: 0.5vw; 
-   text-decoration: none;
+    font-family: "Arial Black", Gadget, sans-serif;
 }
 
 p{
-    background-color:rgb(208, 250, 241);
-    padding: 2.5vw;
-    color: black;
-    border-radius: 0.5vw;
+    padding-top: 1.5vw;
+}
+
+.Time {
+    font-size: 12px;
+    float:right;
+    display: block;
+    margin-right:10px;
+    clear:left;
+}
+
+.Date {
+    font-size: 12px;
 }
 
    /* mediA query*/
@@ -118,6 +138,14 @@ p{
 i {
     font-size: 50px;
     color: white;
+}
+
+.Date{
+    font-size: 20px;
+}
+
+.Time{
+    font-size: 20px;
 }
 
 }
